@@ -278,15 +278,9 @@ let Library = {
             }
         };
         return data.sort(fn);
-    },
-
-
-
-
-
-
+    }
 };
 
-// export default Library;
+export default Library;
 
 

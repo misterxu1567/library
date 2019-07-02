@@ -2,7 +2,7 @@
 * 工具库函数
 */
 
-let Library = {
+const Library = {
     // 获取地址栏参数（#前）
     getQuery(name) {
         // @params: name => 想要获取的地址栏参数（eg: www.abc.com?id=2&type=museum; getQueryFn('type')）
@@ -112,7 +112,7 @@ let Library = {
             return '周' + w;
         }
         // 其他返回年月日
-        return y + "." + m.substring(m.length - 2, m.length) + "." + d.substring(d.length - 2, d.length) + ' ' + hh + ':' + mm;
+        return `${y}.${m}.${d} ${hh}:${mm}`;
     },
     // 获取当前时间 (年-月-日 时:分:秒)
     getNowTime(type) {
@@ -278,7 +278,9 @@ let Library = {
             }
         };
         return data.sort(fn);
-    }
+    },
+    // ***文件编码
+
 };
 
 export default Library;

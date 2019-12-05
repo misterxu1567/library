@@ -14,11 +14,11 @@ const Library = {
         return null;
     },
     // 函数节流
-    throttle(method, context) {
+    throttle(method, context, time = 500, arg) {
         clearTimeout(method.tId);
         method.tId = setTimeout(function () {
-            method.call(context);
-        }, 500)
+            method.call(context, arg);
+        }, time)
     },
     // 正则类型验证
     typeValidate(str, type) {
@@ -147,13 +147,13 @@ const Library = {
         }
         return str;
     },
-    // 时间戳 ＝> 年－月－日 时：分
-    timeToYMDHMS(time, type) {
-        // @params: time => 时间戳（ms）
+    // 时间戳 ＝> 年－月－日 时：分：秒
+    timeToYMDHMS(type, time) {
+        // @params: time => 时间戳（ms），如果不传递将返回当前的时间
         let timeTranslate = function (num) {
             return num < 10 ? `0${num}` : num
         };
-        let date = new Date(parseInt(time));
+        let date = time ? new Date(parseInt(time)) : new Date();
         let y = 1900 + date.getYear();
         let m = timeTranslate(date.getMonth() + 1);
         let d = timeTranslate(date.getDate());
@@ -284,7 +284,36 @@ const Library = {
     // 生成不重复ID
     createRandomId() {
         return (Math.random() * 10000000).toString(16).substr(0, 4) + '-' + (new Date()).getTime() + '-' + Math.random().toString().substr(2, 5);
-    }
+    },
+    // 查询一维数组重复出现的数据的次数 eg:  ["李","弟","李"] => {李: 2, 弟: 1}
+    getRepeatNum(arr) {
+        return arr.reduce(function (prev, next) {
+            prev[next] = (prev[next] + 1) || 1;
+            return prev;
+        }, {});
+    },
+    // 深拷贝
+    deepClone(obj) {
+        if (obj === null || typeof obj !== 'object') return obj;
+        var cpObj = obj instanceof Array ? [] : {};
+        for (var key in obj) cpObj[key] = this.deepClone(obj[key]);
+        return cpObj;
+    },
+    // 将 html 字符串转为 dom对象
+    parseToDOM(str) {
+        let divDom = document.createElement("div");
+        if (typeof str == "string") {
+            divDom.innerHTML = str;
+        }
+        return divDom.children[0]; // 默认返回第一个元素
+    },
+    // 判断两个数组是否相等(数组内只包含一层对象，当前不支持多层对象数据判断)
+    judgeArraryEqual(arr1, arr2) {
+        let array1 = JSON.parse(JSON.stringify(arr1)).sort();
+        let array2 = JSON.parse(JSON.stringify(arr2)).sort();
+        return JSON.stringify(array1) == JSON.stringify(array2);
+    },
+
 };
 
 export default Library;

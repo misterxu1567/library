@@ -313,9 +313,60 @@ const Library = {
         let array2 = JSON.parse(JSON.stringify(arr2)).sort();
         return JSON.stringify(array1) == JSON.stringify(array2);
     },
+    // 判断常用类型，包含 'string','number','boolean','undefined','null','array','function'; '_object' => 表示普通的对象（非null、非函数数、非数组）
+    dataType(data) {
+        // @params: data => 需要验证数据
+        // 未传入判断参数
+        if (arguments.length === 0) {
+            return;
+        }
+        if (typeof data === 'object') {
+            if (Array.isArray(data)) {
+                return 'array';
+            } else if (data === null) {
+                return 'null';
+            } else {
+                return '_object'
+            }
+        } else {
+            return typeof data;
+        }
+    },
+    // 小数加减乘除精度还原
+    calculationDecimal(num1, num2, type) {
+        // @params: num1 => 计算的左侧数据；num2 => 计算的右侧数据；type => 计算类型（'+', '-', '*', '/'）注意必须为英文字符
+        let _num1 = parseFloat(num1);
+        let _num2 = parseFloat(num2);
+        let _num1_left = _num1.toString().split('.')[0];
+        let _num1_right = _num1.toString().split('.')[1] || '0'; // 如果为整数，小数点后取0
+        let _num2_left = _num2.toString().split('.')[0];
+        let _num2_right = _num2.toString().split('.')[1] || '0'; // 如果为整数，小数点后取0
+        let length1 = _num1_right.length;
+        let length2 = _num2_right.length;
+        let minLength = Math.min(length1, length2); // 最小长度
+        let maxLength = Math.max(length1, length2); // 最大长度
+        let dValueLength = maxLength - minLength; // 长度差值
+        let value = 0;
+        if (type === '+') {
+            let value1 = parseFloat(_num1_left) + parseFloat(_num2_left); // 小数左侧整数相加值
+            let value2 = 0;
+            if (length1 < length2) {
+                let n1 = parseFloat(_num1_right) * Math.pow(10, dValueLength); // 换算后的等量右侧小数
+                value2 = (n1 + parseFloat(_num2_right)) / Math.pow(10, maxLength);
+            } else {
+                let n2 = parseFloat(_num2_right) * Math.pow(10, dValueLength); // 换算后的等量右侧小数
+                value2 = (parseFloat(_num1_right) + n2) / Math.pow(10, maxLength);
+            }
+            value = (value1 + parseFloat(value2.toString().split('.')[0])) + '.' + value2.toString().split('.')[1];
+        }
+        return value;
+    },
+    // 数组交换位置(注：会修改原数组，不想修改原数组请传递复制的数据)
+    swapArray(arr, index1, index2) {
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+    }
 
 };
 
 export default Library;
-
-

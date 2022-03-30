@@ -2,7 +2,7 @@
 * DOM操作
 */
 
-export const DomCtrl = {
+export default {
     /**
      * 获取元素相对浏览器视窗的位置
      * @param {Element} [element]

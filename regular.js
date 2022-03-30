@@ -2,7 +2,7 @@
 * 正则
 */
 
-export const Regular = {
+export default {
     /**
      * 正则类型验证
      * @param {String} [str] (验证字符串)

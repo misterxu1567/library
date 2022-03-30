@@ -2,7 +2,7 @@
 * 地址栏操作
 */
 
-export const Url = {
+export default {
     /**
      * 获取地址栏参数
      * @param {String} [name]

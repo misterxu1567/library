@@ -2,7 +2,7 @@
 * 其他
 */
 
-export const Other = {
+export default {
     /**
      * 函数节流
      * @param {Function} [method]

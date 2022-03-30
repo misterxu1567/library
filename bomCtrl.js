@@ -2,7 +2,7 @@
 * 浏览器操作
 */
 
-export const BomCtrl = {
+export default {
     /**
      * 客户端判断
      * @return {String} （android / ios / windows / mac / other）

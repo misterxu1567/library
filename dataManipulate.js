@@ -2,7 +2,7 @@
 * 数据操作
 */
 
-export const DataManipulate = {
+export default {
     /**
      * 生成区间随机整数(注：会重复)
      * @param {Number} [m] 最大数

@@ -2,7 +2,7 @@
 * 日期格式化
 */
 
-export const DateForMat = {
+export default {
     /**
      * 时间戳转译
      * @param {Number} [time] 时间戳（ms）

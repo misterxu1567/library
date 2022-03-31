@@ -28,21 +28,15 @@ export default {
         return str;
     },
     /**
-     * 设备判断
-     * @return {String} （android / ios / wechart / qq / other）
+     * 载体判断
+     * @return {String} （wechart / qq / other）
      */
     deviceJudge() {
         let u = navigator.userAgent;
-        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
-        let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
         let isWx = u.toLowerCase().match(/MicroMessenger/i) == "micromessenger";
         let isQQ = u.toLowerCase().match(/QQ/i) == "qq";
         let str = '';
-        if (isAndroid) {
-            str = 'android'
-        } else if (isIOS) {
-            str = 'ios';
-        } else if (isWx) {
+        if (isWx) {
             str = 'wechart';
         } else if (isQQ) {
             str = 'qq';

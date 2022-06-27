@@ -324,6 +324,35 @@ export default {
      */
     firstToLowerCase(str) {
         return str.charAt(0).toLowerCase() + str.slice(1);
+    },
+    /**
+     * list结构转tree结构数据
+     * @param {Array} [list]
+     * @param {String} [key] (节点唯一属性名)
+     * @param {String} [parentKey] (父节点的唯一属性名，用于关系映射)
+     * @param {String} [rootValue] (根节点的值)
+     * @return {Array} (tree结构数据)
+     * eg: 
+     * const list = [{id: '0', name:'根', parentId: '-1'},{id: '1', parentId: '0', name: '节点1'}]
+     * 其中: key = 'id', parentKet = 'parentId', rootValue = '-1'
+     */
+    transformListToTree(list, key, parentKey, rootValue) {
+        const group = {}
+        list.forEach(item => {
+            const parentId = item[parentKey]
+            if (!Object.prototype.hasOwnProperty.call(group, parentId)) {
+            group[parentId] = []
+            }
+            group[parentId].push(item)
+        })
+        list.forEach(item => {
+            const id = item[key]
+            if (Object.prototype.hasOwnProperty.call(group, id)) {
+            item.children = group[id]
+            }
+        })
+        if (group[rootValue]) {
+            return group[rootValue]
+        }
     }
-    
 };
